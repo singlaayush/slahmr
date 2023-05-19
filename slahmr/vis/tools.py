@@ -138,7 +138,9 @@ def track_to_colors(track_ids):
     :param track_ids (B)
     """
     color_map = torch.from_numpy(get_colors()).to(track_ids)
-    return color_map[track_ids] / 255  # (B, 3)
+    print("COLOR_MAP", color_map[track_ids]) # tensor([[  1, 187, 249]], device='cuda:0')
+    #return color_map[track_ids] / 255  # (B, 3)
+    return torch.Tensor([[245, 245, 244]]).to(track_ids) / 255
 
 
 def get_colors():

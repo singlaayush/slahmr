@@ -104,10 +104,11 @@ def run_vis(
         for phase, it in phase_max_iters.items():
             grid_path = f"{save_dir}/{dataset.seq_name}_{phase}_grid.mp4"
             vid_paths = [
-                inp_vid_path,
+#                inp_vid_path,
+                f"{save_dir}/{dataset.seq_name}_input.mp4",
                 f"{save_dir}/{dataset.seq_name}_{phase}_final_{it}_src_cam.mp4",
                 f"{save_dir}/{dataset.seq_name}_{phase}_final_{it}_above.mp4",
-                f"{save_dir}/{dataset.seq_name}_{phase}_final_{it}_side.mp4",
+                f"{save_dir}/{dataset.seq_name}_{phase}_final_{it}_side.mov",
             ]
             make_video_grid_2x2(
                 grid_path,
@@ -218,7 +219,9 @@ def launch_vis(i, args):
     dev_id = args.gpus[i % len(args.gpus)]
     os.environ["EGL_DEVICE_ID"] = str(dev_id)
     os.environ["PYOPENGL_PLATFORM"] = "egl"
-
+    
+    save_dir = None
+   
     if args.save_root is not None:
         path_name = log_dir.split(args.log_root)[-1].strip("/")
         exp_name = "-".join(path_name.split("/")[:2])

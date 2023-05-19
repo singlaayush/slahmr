@@ -231,10 +231,12 @@ def get_seq_static_lookat_points(seq_name=None, bounds=None):
         bb_min, bb_max, center = bounds
         print("SCENE BOUNDS", bb_min, bb_max, center)
         length = torch.abs(bb_max - bb_min).max()
-        print(length)
+        print("length", length)
         top_source = center + torch.tensor([0.0, -2.0, -0.9 * length])
 
-        side_source = center + torch.tensor([0.5 * length, -0.5, -0.7 * length])
+        #side_source = center + torch.tensor([0.5 * length, -0.5, -0.7 * length])
+        side_source = center + torch.tensor([-2 * length, -0.25, 0.0 * length])
+        #side_source = torch.tensor([4, 0.2388,  3.5])
         return (top_source, center), (side_source, center)
 
     top_source = torch.tensor([0.0, -2.0, -3.0])

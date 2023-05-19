@@ -184,6 +184,8 @@ def build_pyrender_scene(
     # set camera views
     if not "cameras" in scene:
         scene["cameras"] = {}
+        
+    #print("SCENE CAMERAS FRONT", scene["cameras"]["front"][0])
 
     # remove default views from source camera perspective if desired
     if "src_cam" not in render_views:
@@ -193,11 +195,21 @@ def build_pyrender_scene(
 
     # add static viewpoints if desired
     top_pose, side_pose, _skip = get_static_views(seq_name, bounds)
+    #print("SIDE SOURCE", side_pose[0])
+    #print("SIDE TARGET", side_pose[1])
+    print("SCENE CAMERAS SIDE", side_pose[None])
     if "above" in render_views:
         scene["cameras"]["above"] = top_pose[None]
     if "side" in render_views:
         scene["cameras"]["side"] = side_pose[None]
+        #scene["cameras"]["side"] = torch.Tensor([[
+        #    [ 0.0000, -0.0827,  0.9966, -3.3513],
+        #    [ 0.0000,  0.9966,  0.0827,  0.2388],
+        #    [-1.0000,  0.0000,  0.0000,  3.4796],
+        #    [ 0.0000,  0.0000,  0.0000,  1.0000]
+        #]])
 
+    
     # accumulate meshes if possible (can only accumulate for static camera)
     moving_cam = "src_cam" in render_views or "front" in render_views
     accumulate = accumulate and not moving_cam
@@ -258,7 +270,7 @@ def make_video_grid_2x2(out_path, vid_paths, overwrite=False):
         f"-filter_complex '[0:v]scale=iw/2:ih/2[v0];"
         f"[1:v]scale=iw/2:ih/2[v1];"
         f"[2:v]scale=iw/2:ih/2[v2];"
-        f"[3:v]scale=iw/2:ih/2[v3];"
+        f"[3:v]scale=624/2:1104/2[v3];"
         f"[v0][v1][v2][v3]xstack=inputs=4:layout=0_0|w0_0|0_h0|w0_h0[v]' "
         f"-map '[v]' {out_path} -y"
     )

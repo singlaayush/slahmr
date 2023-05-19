@@ -9,6 +9,9 @@ __pycache__/
 *cache*
 *checkpoints*
 *_DATA
+*videos*
+*venv*
+*images*
 
 *.swp
 *.out
@@ -138,3 +141,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+cameras/
+phalp_out/
+shot_idcs/
+track_preds/
